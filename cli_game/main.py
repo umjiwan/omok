@@ -18,20 +18,19 @@ def play(turn):
             print("")
             print(turn_type)
             
-            row_point = int(input("row : "))
-            column_point = int(input("column : "))
+            row_point, column_point = map(int, input("row, column : ").split(","))
+
             print(f"{row_point}, {column_point}")
         
             print("")
             
-            if omok_board[row_point, column_point] != 0:
+            if omok_board[row_point - 1, column_point - 1] != 0:
                 print("nope")
             else:
                 if turn_type == "black":
                     omok_board[row_point - 1, column_point - 1] = black
                 elif turn_type == "white":
                     omok_board[row_point - 1, column_point - 1] = white
-
                 turn += 1
 
 size = 15
