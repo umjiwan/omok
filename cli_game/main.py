@@ -43,4 +43,3 @@ first_turn = 1
 run = True
 
 play(first_turn)
-
