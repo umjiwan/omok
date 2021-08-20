@@ -1,5 +1,6 @@
 import pygame
 import numpy as np
+import pos # pos.py module impot
 
 pygame.init()
 screen = pygame.display.set_mode((800, 800))
@@ -11,50 +12,35 @@ oo = 53
 spot_pos = 50/2
 block = 50
 running = True
-nemo = -1
+pos_count = -1
 
 while running:
-    if nemo == -1:
-        apb = "a"
-    if nemo == 0:
-        apb = "b"
-    if nemo == 1:
-        apb = "c"
-    if nemo == 2:
-        apb = "d"
-    if nemo == 3:
-        apb = "e"
-    if nemo == 4:
-        apb = "f"
-    if nemo == 5:
-        apb = "g"
-    if nemo == 6:
-        apb = "h"
-    if nemo == 7:
-        apb = "i"
-    if nemo == 8:
-        apb = "j"
-    if nemo == 9:
-        apb = "k"
-    if nemo == 10:
-        apb = "l"
-    if nemo == 11:
-        apb = "n"
-    if nemo == 12:
-        apb = "m"
-    if nemo == 13:
-        apb = "o"
+    apb = pos.pos_apb(pos_count)
+    
     for i in range(15):
-        globals()[f"{apb}{i}"] = [oo + (i * 50), (oo + block*(nemo+1))]
-    nemo += 1
-    if nemo > 13:
+        globals()[f"{apb}{i}_pos"] = [-53, -53]
+    # print(globals()[f"{apb}{i}_pos"])
+    pos_count += 1
+    
+    if pos_count > 13:
+        running = False
+
+running = True
+pos_count = -1
+
+while running:
+    apb = pos.pos_apb(pos_count)
+
+    for i in range(15):
+        globals()[f"{apb}{i}"] = [oo + (i * 50), (oo + block*(pos_count+1))]
+    pos_count += 1
+    if pos_count > 13:
         running = False
 
 run = True
 
 background = pygame.image.load("src/img/omok_board.png") # omok_board
 background = pygame.transform.scale(background, (700, 700))
-
 #load
 omok_black = pygame.image.load("src/img/omok_black.png")
 omok_white = pygame.image.load("src/img/omok_white.png")
@@ -63,19 +49,24 @@ omok_black = pygame.transform.scale(omok_black, (50, 50))
 omok_white = pygame.transform.scale(omok_white, (50, 50))
 
 while run:
+    for event in pygame.event.get(): 
+        if event.type == pygame.QUIT:
+            run = False
+        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+            mouse_pos = list(pygame.mouse.get_pos())
+            print(mouse_pos)
+            if mouse_pos == a0:
+                a0_pos = [a0[0]-spot_pos, a0[1]-spot_pos]
+            
+    mouse_left_click = False
     screen.blit(background, (53, 53))
-
-    event = pygame.event.poll()
-    if event.type == pygame.QUIT:
-        run = False
-
-    if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-        mouse_pos = list(pygame.mouse.get_pos())
-        print(mouse_pos)
-
-        
+    screen.blit(omok_white, a0_pos)
+    # stone blit
+    # screen.blit(omok_white, (a0[0]-spot_pos, a0[1]-spot_pos))
+    
 
     pygame.display.update()
     clock.tick(30) # fps
+
 pygame.quit()
     
