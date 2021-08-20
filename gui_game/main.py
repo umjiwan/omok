@@ -18,7 +18,7 @@ while running:
     apb = pos.pos_apb(pos_count)
 
     for i in range(15):
-        globals()[f"{apb}{i}"] = [oo + (i * 50), (oo + block*(pos_count+1))]
+        globals()[f"{apb}{i}"] = [oo + (i * 50), (oo + block*(pos_count+1))] # 각 칸의 좌표를 변수로 지정 ex) a0 = [53, 53]
     pos_count += 1
 
     if pos_count > 13:
@@ -31,7 +31,7 @@ while running:
     apb = pos.pos_apb(pos_count)
     
     for i in range(15):
-        globals()[f"{apb}{i}_pos"] = [(oo + (i * 50)) * -1, ((oo + block*(pos_count+1)) * -1 )]
+        globals()[f"{apb}{i}_pos"] = [(oo + (i * 50)) * -1, ((oo + block*(pos_count+1)) * -1 )] # 보이지 않는 곳에 생성 ex) a0 = [-53, -53]
     # print(globals()[f"{apb}{i}_pos"])
     pos_count += 1
     
@@ -56,7 +56,7 @@ while run:
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
             mouse_pos = list(pygame.mouse.get_pos())
             print(mouse_pos)
-            if mouse_pos == a0:
+            if mouse_pos == a0: # 테스트용
                 a0_pos = [a0[0]-spot_pos, a0[1]-spot_pos]
             
     mouse_left_click = False
