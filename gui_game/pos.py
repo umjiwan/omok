@@ -29,9 +29,5 @@ def pos_apb(nemo):
         apb = "m"
     if nemo == 13:
         apb = "o"
-    """
-    for i in range(15):
-        globals()[f"{apb}{i}_pos"] = [-53, -53]
-    """
     return apb
-    
+# 변수 이름 정하는게 가장 큰 고민 거리
