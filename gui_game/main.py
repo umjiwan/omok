@@ -4,6 +4,8 @@ import pos # pos.py module impot
 import cli_board
 
 pygame.init()
+pygame.mixer.init()
+
 screen = pygame.display.set_mode((800, 800))
 clock = pygame.time.Clock()
 pygame.display.set_caption("ul omok")
@@ -13,11 +15,13 @@ spot_pos = 50/2
 block = 50
 turn = 1
 np_omok_board = np.zeros([15, 15])
+sound_put_stone = pygame.mixer.Sound("src/sound/put_stone.ogg")
+sound_put_stone.set_volume(1)
 
 running = True
 pos_count = -1
 
-while running:
+while running: # 좌표 리스트로 구하기
     apb = pos.pos_apb(pos_count)
 
     for i in range(15):
@@ -30,8 +34,8 @@ while running:
 running = True
 pos_count = -1
 
-while running:
-    apb = pos.pos_apb(pos_count)
+while running: # 포지션 구하기 
+    apb = pos.pos_apb(pos_count) # 알파벳 값 구하기
     
     for i in range(15):
         globals()[f"white_{apb}{i}_pos"] = [(oo + (i * 50)) * -1, ((oo + block*(pos_count+1)) * -1 )] # 보이지 않는 곳에 생성 ex) a0 = [-53, -53]
@@ -58,6 +62,7 @@ while running:
 
 run = True
 
+# img
 background = pygame.image.load("src/img/ed_omok_board.png") # omok_board
 background = pygame.transform.scale(background, (800, 800)) # board_scale
 #load
@@ -82,27 +87,24 @@ while run:
                 apb = pos.pos_apb(pos_count)
                 for i in range(15):
                     globals()[f"{apb}{i}"] = [oo + (i * 50), (oo + block*(pos_count+1))] # 각 칸의 좌표를 변수로 지정 ex) a0 = [53, 53]
-                    if mouse_pos[0] >= globals()[f"{apb}{i}"][0]-10: # 테스트용
-                        if mouse_pos[0] <= globals()[f"{apb}{i}"][0]+10:
-                            if mouse_pos[1] >= globals()[f"{apb}{i}"][1]-10:
-                                if mouse_pos[1] <= globals()[f"{apb}{i}"][1]+10:
+                    if mouse_pos[0] >= globals()[f"{apb}{i}"][0]-15: # 테스트용
+                        if mouse_pos[0] <= globals()[f"{apb}{i}"][0]+15:
+                            if mouse_pos[1] >= globals()[f"{apb}{i}"][1]-15:
+                                if mouse_pos[1] <= globals()[f"{apb}{i}"][1]+15:
                                     np_omok_board, turn, overlap, np_x, np_y = cli_board.create_board(turn, i, apb, np_omok_board) # size, first_color, board_run, y, x
                                     print(np_omok_board)
                                     
                                     if overlap != True:
                                         if np_omok_board[np_y, np_x] == 1:
                                             globals()[f"black_{apb}{i}_pos"] = [globals()[f"{apb}{i}"][0]-spot_pos, globals()[f"{apb}{i}"][1]-spot_pos]
-                                            
+                                            sound_put_stone.play()
                                         if np_omok_board[np_y, np_x] == 2:
                                             globals()[f"white_{apb}{i}_pos"] = [globals()[f"{apb}{i}"][0]-spot_pos, globals()[f"{apb}{i}"][1]-spot_pos]
-                                        
+                                            sound_put_stone.play()
                                         
                                         turn += 1
                                         overlap = False
 
-                                        
-
-                        
                                     # globals()[f"{apb}{i}_pos"] = [globals()[f"{apb}{i}"][0]-spot_pos, globals()[f"{apb}{i}"][1]-spot_pos]
                 pos_count += 1
 
