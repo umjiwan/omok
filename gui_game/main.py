@@ -58,8 +58,8 @@ while running:
 
 run = True
 
-background = pygame.image.load("src/img/omok_board.png") # omok_board
-background = pygame.transform.scale(background, (700, 700)) # board_scale
+background = pygame.image.load("src/img/ed_omok_board.png") # omok_board
+background = pygame.transform.scale(background, (800, 800)) # board_scale
 #load
 omok_black = pygame.image.load("src/img/omok_black.png")
 omok_white = pygame.image.load("src/img/omok_white.png")
@@ -124,7 +124,7 @@ while run:
                         if mouse_pos[1] <= b0[1]+10:
                             b0_pos = [b0[0]-spot_pos, b0[1]-spot_pos]
             """
-    screen.blit(background, (53, 53))
+    screen.blit(background, (0, 0))
 
     # screen.blit(omok_white, a0_pos)
     # screen.blit(omok_black, b0_pos)
