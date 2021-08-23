@@ -73,6 +73,8 @@ omok_white = pygame.image.load("src/img/omok_white.png")
 omok_black = pygame.transform.scale(omok_black, (50, 50))
 omok_white = pygame.transform.scale(omok_white, (50, 50))
 
+end = False
+
 while run:
     for event in pygame.event.get(): 
         if event.type == pygame.QUIT:
@@ -81,7 +83,8 @@ while run:
             mouse_pos = list(pygame.mouse.get_pos())
             print(mouse_pos)
             
-            running = True
+            if end != True:
+                running = True
             pos_count = -1
             run_count = 1
             while running:
@@ -93,7 +96,7 @@ while run:
                             if mouse_pos[1] >= globals()[f"{apb}{i}"][1]-15:
                                 if mouse_pos[1] <= globals()[f"{apb}{i}"][1]+15:
                                     win = False
-                                    np_omok_board, turn, overlap, np_x, np_y, win = cli_board.create_board(turn, i, apb, np_omok_board) # size, first_color, board_run, y, x
+                                    np_omok_board, turn, overlap, np_x, np_y, win, turn_type = cli_board.create_board(turn, i, apb, np_omok_board) # size, first_color, board_run, y, x
                                     print(np_omok_board)
                                     
                                     if overlap != True:
@@ -106,16 +109,22 @@ while run:
                                             sound_put_stone.play()
 
                                         if win == True:
-                                            run = False
+                                            running = False
+                                            end = True
+                                            break
+                                            
 
                                         turn += 1
                                         overlap = False
 
                                     # globals()[f"{apb}{i}_pos"] = [globals()[f"{apb}{i}"][0]-spot_pos, globals()[f"{apb}{i}"][1]-spot_pos]
-                pos_count += 1
+                if end != True:
+                    pos_count += 1
 
-                if pos_count > 13:
-                    running = False
+                    if pos_count > 13:
+                        running = False
+
+                    
 
             # pos.put_omok_stone(mouse_pos, spot_pos)
             

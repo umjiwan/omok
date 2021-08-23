@@ -56,7 +56,7 @@ def create_board(turn, np_x, apb_y, np_omok_board):
             win = True
         
 
-        return np_omok_board, turn, False, np_x, np_y, win
+        return np_omok_board, turn, False, np_x, np_y, win, turn_type
 
 
 
