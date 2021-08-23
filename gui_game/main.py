@@ -15,8 +15,9 @@ spot_pos = 50/2
 block = 50
 turn = 1
 np_omok_board = np.zeros([15, 15])
+# sound
 sound_put_stone = pygame.mixer.Sound("src/sound/put_stone.ogg")
-sound_put_stone.set_volume(1)
+sound_put_stone.set_volume(0.3)
 
 running = True
 pos_count = -1
@@ -91,17 +92,22 @@ while run:
                         if mouse_pos[0] <= globals()[f"{apb}{i}"][0]+15:
                             if mouse_pos[1] >= globals()[f"{apb}{i}"][1]-15:
                                 if mouse_pos[1] <= globals()[f"{apb}{i}"][1]+15:
-                                    np_omok_board, turn, overlap, np_x, np_y = cli_board.create_board(turn, i, apb, np_omok_board) # size, first_color, board_run, y, x
+                                    win = False
+                                    np_omok_board, turn, overlap, np_x, np_y, win = cli_board.create_board(turn, i, apb, np_omok_board) # size, first_color, board_run, y, x
                                     print(np_omok_board)
                                     
                                     if overlap != True:
                                         if np_omok_board[np_y, np_x] == 1:
                                             globals()[f"black_{apb}{i}_pos"] = [globals()[f"{apb}{i}"][0]-spot_pos, globals()[f"{apb}{i}"][1]-spot_pos]
                                             sound_put_stone.play()
+                                            
                                         if np_omok_board[np_y, np_x] == 2:
                                             globals()[f"white_{apb}{i}_pos"] = [globals()[f"{apb}{i}"][0]-spot_pos, globals()[f"{apb}{i}"][1]-spot_pos]
                                             sound_put_stone.play()
-                                        
+
+                                        if win == True:
+                                            run = False
+
                                         turn += 1
                                         overlap = False
 

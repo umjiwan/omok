@@ -1,7 +1,6 @@
 def create_board(turn, np_x, apb_y, np_omok_board):
     import numpy as np
-    cli_black = 1
-    cli_white = 2
+    import rule
 
     if turn % 2 == 1:
         turn_type = "black"
@@ -46,7 +45,18 @@ def create_board(turn, np_x, apb_y, np_omok_board):
             np_omok_board[np_y, np_x] = 1
         elif turn_type == "white":
             np_omok_board[np_y, np_x] = 2
-        return np_omok_board, turn, False, np_x, np_y
+            
+        win_VerticalLine = rule.VerticalLine(turn_type, np_x, np_y, np_omok_board)
+        win_PlusMinusDiagonal = rule.PlusMinusDiagonal(turn_type, np_x, np_y, np_omok_board)
+        win_HorizontalLine = rule.HorizontalLine(turn_type, np_x, np_y, np_omok_board)
+        win_MinusPlusDiagonal = rule.MinusPlusDiagonal(turn_type, np_x, np_y, np_omok_board)
+
+        win = False
+        if win_VerticalLine or win_PlusMinusDiagonal or win_HorizontalLine or win_MinusPlusDiagonal == True:
+            win = True
+        
+
+        return np_omok_board, turn, False, np_x, np_y, win
 
 
 
