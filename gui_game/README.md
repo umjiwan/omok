@@ -1,6 +1,5 @@
 # gui_omok  
-
-![img_omokboard](./src/img/github/github_omokboard.png){: width="80%"height="80%"}
+<img src="src/img/github/github_omokboard.png" width="75%" height="75%">
   
 
 lang : Python  
