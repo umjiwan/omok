@@ -1,6 +1,6 @@
 import pygame
 import numpy as np
-import pos # pos.py module impot
+import pos # pos.py module import
 import cli_board
 
 pygame.init()
@@ -10,7 +10,7 @@ screen = pygame.display.set_mode((800, 800))
 clock = pygame.time.Clock()
 pygame.display.set_caption("ul omok")
 
-oo = 53
+oo = 50
 spot_pos = 50/2
 block = 50
 turn = 1
@@ -18,6 +18,8 @@ np_omok_board = np.zeros([15, 15])
 # sound
 sound_put_stone = pygame.mixer.Sound("src/sound/put_stone.ogg")
 sound_put_stone.set_volume(0.3)
+sound_end = pygame.mixer.Sound("src/sound/end.ogg")
+sound_end.set_volume(0.5)
 
 running = True
 pos_count = -1
@@ -111,6 +113,7 @@ while run:
                                         if win == True:
                                             running = False
                                             end = True
+                                            sound_put_stone.play()
                                             break
                                             
 
